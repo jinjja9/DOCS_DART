@@ -1,5 +1,72 @@
 # BUOI 2: Biến, Nullable, Hàm, bất đồng bộ, Class...
 
+- [BUOI 2: Biến, Nullable, Hàm, bất đồng bộ, Class...](#buoi-2-biến-nullable-hàm-bất-đồng-bộ-class)
+  - [I. Biến và Kiểu dữ liệu](#i-biến-và-kiểu-dữ-liệu)
+    - [1. Var](#1-var)
+    - [2. Dynamic](#2-dynamic)
+    - [3. final](#3-final)
+    - [4. const](#4-const)
+    - [5. Late Initialization (late)](#5-late-initialization-late)
+    - [6. Kiểu Dữ Liệu (Data Types)](#6-kiểu-dữ-liệu-data-types)
+      - [6.1. Kiểu Số `(int, double)`](#61-kiểu-số-int-double)
+      - [6.2. Chuỗi `(String)`](#62-chuỗi-string)
+      - [6.3. Danh Sách (List)](#63-danh-sách-list)
+  - [II. Nullable, Null Safety](#ii-nullable-null-safety)
+    - [Null Safety](#null-safety)
+      - [1. Khái niệm Null Safety](#1-khái-niệm-null-safety)
+      - [2. Các nguyên tắc chính của Null Safety](#2-các-nguyên-tắc-chính-của-null-safety)
+      - [3. Cách làm việc với Null Safety](#3-cách-làm-việc-với-null-safety)
+      - [4. Null Safety với Collections](#4-null-safety-với-collections)
+      - [5. Lợi ích của Null Safety](#5-lợi-ích-của-null-safety)
+  - [III. Functions](#iii-functions)
+    - [1. Required Positional Parameters (Tham số vị trí bắt buộc)](#1-required-positional-parameters-tham-số-vị-trí-bắt-buộc)
+    - [2. Optional Positional Parameters (Tham số vị trí tùy chọn)](#2-optional-positional-parameters-tham-số-vị-trí-tùy-chọn)
+    - [3. Named Parameters (Tham số đặt tên)](#3-named-parameters-tham-số-đặt-tên)
+    - [4. Required Named Parameters (Tham số đặt tên bắt buộc)](#4-required-named-parameters-tham-số-đặt-tên-bắt-buộc)
+    - [5. Default Parameters (Tham số mặc định)](#5-default-parameters-tham-số-mặc-định)
+    - [6. Anonymous Functions (Hàm ẩn danh)](#6-anonymous-functions-hàm-ẩn-danh)
+    - [7. Higher-Order Functions (Hàm bậc cao)](#7-higher-order-functions-hàm-bậc-cao)
+    - [8. Recursive Functions (Hàm đệ quy)](#8-recursive-functions-hàm-đệ-quy)
+    - [9. Lexical Scope (Phạm vi từ vựng)](#9-lexical-scope-phạm-vi-từ-vựng)
+  - [IV. Tìm hiểu về bất đồng bộ](#iv-tìm-hiểu-về-bất-đồng-bộ)
+    - [1. Khái niệm cơ bản](#1-khái-niệm-cơ-bản)
+    - [2. Future](#2-future)
+      - [2.1 `Future` là gì?](#21-future-là-gì)
+      - [2.2 Chi tiết trạng thái của Future](#22-chi-tiết-trạng-thái-của-future)
+      - [2.3. Hoàn thành với giá trị (Completing with a value)](#23-hoàn-thành-với-giá-trị-completing-with-a-value)
+      - [2.4 Hoàn thành với lỗi (Completing with an error)](#24-hoàn-thành-với-lỗi-completing-with-an-error)
+    - [3. Working with futures: async and await](#3-working-with-futures-async-and-await)
+      - [Chuyển đổi hàm main() từ đồng bộ sang bất đồng bộ](#chuyển-đổi-hàm-main-từ-đồng-bộ-sang-bất-đồng-bộ)
+      - [So sánh giữa hàm đồng bộ và bất đồng bộ](#so-sánh-giữa-hàm-đồng-bộ-và-bất-đồng-bộ)
+    - [4. Future và phương thức then](#4-future-và-phương-thức-then)
+    - [5. Asynchronous programming: Streams](#5-asynchronous-programming-streams)
+  - [V. Class](#v-class)
+    - [1. Giới thiệu về Class](#1-giới-thiệu-về-class)
+    - [2. Fields (Thuộc tính)](#2-fields-thuộc-tính)
+    - [3. Constructors (Hàm tạo)](#3-constructors-hàm-tạo)
+      - [a. Default Constructor](#a-default-constructor)
+      - [b. Named Constructor](#b-named-constructor)
+      - [c. Redirecting Constructor](#c-redirecting-constructor)
+      - [d. Factory Constructor](#d-factory-constructor)
+    - [4. Methods (Phương thức)](#4-methods-phương-thức)
+      - [Getter và Setter](#getter-và-setter)
+    - [5. Inheritance (Kế thừa)](#5-inheritance-kế-thừa)
+    - [6. Abstract Classes](#6-abstract-classes)
+    - [7. Extension Methods](#7-extension-methods)
+  - [VI. With, Mixin](#vi-with-mixin)
+    - [1.  Cách sử dụng Mixins](#1--cách-sử-dụng-mixins)
+    - [2. Định nghĩa một Mixin](#2-định-nghĩa-một-mixin)
+    - [3. Đảm bảo các thành viên cần thiết trong mixin](#3-đảm-bảo-các-thành-viên-cần-thiết-trong-mixin)
+    - [4. Sử dụng từ khóa `on` để giới hạn lớp cha](#4-sử-dụng-từ-khóa-on-để-giới-hạn-lớp-cha)
+    - [5. class, mixin, or mixin class?](#5-class-mixin-or-mixin-class)
+  - [BTVN.](#btvn)
+    - [Bài 1:](#bài-1)
+  - [Bài 2](#bài-2)
+    - [Tìm hiểu thêm về implement và extend.](#tìm-hiểu-thêm-về-implement-và-extend)
+      - [1. extend (Kế thừa lớp)](#1-extend-kế-thừa-lớp)
+      - [2. implement (Thực thi Interface)](#2-implement-thực-thi-interface)
+      - [3. Kết hợp extends và implements](#3-kết-hợp-extends-và-implements)
+
 ## I. Biến và Kiểu dữ liệu
 
 ### 1. Var
@@ -1543,164 +1610,162 @@ mixin class Invalid on SomeBaseClass { // Không hợp lệ
 }
 ```
 
-## VII. 4 tính chất oop
+## BTVN.
 
-### 1. Tính đóng gói (Encapsulation):
+### Bài 1:
 
-- `Encapsulation` trong OOP có nghĩa là đóng gói dữ liệu và phương thức lại thành một đơn vị duy nhất, tránh sự tiếp cận trực tiếp từ bên ngoài. Điều này giúp bảo vệ dữ liệu và cung cấp một giao diện dễ dàng hơn để tương tác với đối tượng.
+| **Khía cạnh**         | **Future**                                                              | **Stream**                                                     |
+|------------------------|------------------------------------------------------------------------|----------------------------------------------------------------|
+| **Định nghĩa**         | Đại diện cho một giá trị hoặc lỗi trong tương lai                      | Đại diện cho một chuỗi các giá trị hoặc lỗi theo thời gian     |
+| **Kết quả**           | Một giá trị hoặc lỗi duy nhất                                          | Chuỗi các giá trị hoặc lỗi                                      |
+| **Ngữ cảnh sử dụng**    | Khi chỉ có một kết quả cần xử lý                                      | Khi cần xử lý nhiều giá trị trong khoảng thời gian dài         |
+| **Ví dụ phổ biến**     | Kết quả của một cuộc gọi HTTP                                         | Sự kiện nhấn nút, dữ liệu đọc từ tệp, hoặc luồng mạng          |
+| **Cách lắng nghe**     | `then`, `catchError`, `await`                                        | `listen`, `await for`                                          |
+| **Tính năng phát lại** | Không có (single-use)                                                | Có (Broadcast Stream có thể sử dụng lại)                      |
+| **Kiểm soát dữ liệu**  | Không thể kiểm soát luồng dữ liệu sau khi Future đã hoàn thành       | Có thể quản lý luồng dữ liệu với `StreamController`           |
+| **Đồng bộ hóa**         | Dễ dàng hơn, thường được dùng cho tác vụ bất đồng bộ đơn lẻ         | Phức tạp hơn, thường được dùng cho chuỗi tác vụ bất đồng bộ   |
 
-- Trong Dart, bạn có thể sử dụng các từ khóa `private` và `public` để kiểm soát sự truy cập vào các trường (fields) và phương thức.
+
+## Bài 2
+
+### Tìm hiểu thêm về implement và extend.
+
+#### 1. extend (Kế thừa lớp)
+- **Mục đích:** Dùng để kế thừa tất cả các thuộc tính và phương thức từ một lớp cha (superclass).
+
+- Cách hoạt động:
+
+  - Khi một lớp kế thừa từ một lớp khác, lớp con sẽ có quyền truy cập vào tất cả các thành viên (thuộc tính và phương thức) của lớp cha.
+  - Lớp con có thể ghi đè (override) các phương thức của lớp cha nếu muốn.
+  - Một lớp chỉ có thể kế thừa từ một lớp cha duy nhất.
 
 ```dart
-class Person {
-  String _name;  // Trường _name là private, không thể truy cập từ ngoài lớp
-  int _age;      // Trường _age cũng là private
-  
-  // Constructor để khởi tạo các giá trị
-  Person(this._name, this._age);
-  
-  // Phương thức public để lấy tên
-  String getName() {
-    return _name;
+class Animal {
+  void speak() {
+    print("Animal is speaking");
   }
-  
-  // Phương thức public để thay đổi tên
-  void setName(String name) {
-    _name = name;
-  }
+}
 
-  // Phương thức public để lấy tuổi
-  int getAge() {
-    return _age;
-  }
-
-  // Phương thức public để thay đổi tuổi
-  void setAge(int age) {
-    if (age > 0) {
-      _age = age;
-    }
+class Dog extends Animal {
+  @override
+  void speak() {
+    print("Dog is barking");
   }
 }
 
 void main() {
-  var person = Person("John", 30);
-  print(person.getName()); // John
-  person.setName("Doe");
-  print(person.getName()); // Doe
+  var dog = Dog();
+  dog.speak();  // Output: Dog is barking
+}
+```
+Lưu ý:
+
+- Kế thừa cho phép lớp con nhận được tất cả các hành vi và trạng thái của lớp cha, nhưng không thể kế thừa từ nhiều lớp cha (chỉ kế thừa một lớp cha).
+
+- Phương thức của lớp cha có thể được ghi đè (override) trong lớp con nếu cần.
+
+#### 2. implement (Thực thi Interface)
+
+- **Mục đích:** Dùng để đảm bảo rằng một lớp sẽ triển khai tất cả các phương thức đã khai báo trong interface.
+
+- Cách hoạt động:
+
+  - `implement` yêu cầu lớp thực thi tất cả các phương thức và thuộc tính của interface mà nó implement.
+  - Lớp có thể `implement` nhiều interface, điều này giúp lớp đó tuân theo nhiều giao diện khác nhau.
+
+
+```dart
+// Định nghĩa interface đầu tiên
+abstract class Speakable {
+  void speak();  // Phương thức yêu cầu lớp implement phải có
+}
+
+// Định nghĩa interface thứ hai
+abstract class Walkable {
+  void walk();  // Phương thức yêu cầu lớp implement phải có
+}
+
+// Lớp Person implement cả hai interface: Speakable và Walkable
+class Person implements Speakable, Walkable {
+  String name;
+
+  Person(this.name);
+
+  // Implement phương thức từ Speakable
+  @override
+  void speak() {
+    print("$name is speaking.");
+  }
+
+  // Implement phương thức từ Walkable
+  @override
+  void walk() {
+    print("$name is walking.");
+  }
+}
+
+void main() {
+  var person = Person("John");
+
+  // Gọi các phương thức từ các interface
+  person.speak();  // Output: John is speaking.
+  person.walk();   // Output: John is walking.
 }
 ```
 
-### 2. Abstraction (Trừu tượng)
+Lưu ý:
 
-- `Abstraction` trong OOP có nghĩa là ẩn đi các chi tiết cài đặt và chỉ cung cấp các giao diện (interface) cần thiết. 
+- Một lớp có thể **implement nhiều interface**, điều này cho phép lớp đó có thể đảm nhận nhiều hành vi khác nhau mà các interface quy định.
+- Một khi một lớp implement một interface, lớp đó bắt buộc phải cung cấp triển khai cho tất cả các phương thức của interface.
 
-- `Lớp trừu tượng` sẽ giúp người sử dụng chỉ cần quan tâm đến cách sử dụng mà không cần phải biết cách thức cài đặt bên trong.
+#### 3. Kết hợp extends và implements
+
+Bạn cũng có thể sử dụng cả `extends` và `implements` trong cùng một lớp. Lớp có thể kế thừa từ một lớp cha và implement nhiều giao diện.
 
 ```dart
 abstract class Animal {
-  void makeSound(); // Phương thức trừu tượng, không có thân hàm
+  void eat();
 }
 
-class Dog extends Animal {
-  @override
-  void makeSound() {
-    print("Woof!");
+class Barkable {
+  void bark() {
+    print("Barking");
   }
 }
 
-class Cat extends Animal {
+class Dog extends Barkable implements Animal {
   @override
-  void makeSound() {
-    print("Meow!");
+  void eat() {
+    print("Dog is eating");
   }
 }
 
 void main() {
-  Animal dog = Dog();
-  dog.makeSound();  // Woof!
-  
-  Animal cat = Cat();
-  cat.makeSound();  // Meow!
+  Dog dog = Dog();
+  dog.eat();   // Output: Dog is eating
+  dog.bark();  // Output: Barking
 }
 ```
 
-- `Animal` là một lớp trừu tượng với phương thức `makeSound()` không có phần thân hàm.
-- Các lớp `Dog` và `Cat` kế thừa từ `Animal` và cài đặt phương thức `makeSound()` của mình.
-- Người dùng không cần quan tâm đến cách thức `makeSound` hoạt động, chỉ cần biết rằng đó là một phương thức cần được triển khai.
+**Khi nào nên dùng extends và implements?**
 
-### 3. Inheritance (Kế thừa)
+- `extends`: cùng cấp (class-class; interface-interface)
 
-- `Inheritance` là một tính chất cho phép một lớp kế thừa các `thuộc tính` và `phương thức` từ lớp khác. 
+- Dùng `extends` khi:
 
-- `Kế thừa` giúp tái sử dụng mã nguồn và xây dựng các lớp phức tạp hơn từ các lớp đơn giản hơn.
+  - Bạn muốn tái sử dụng hành vi của lớp cha.
+  - Cần xây dựng mối quan hệ kế thừa giữa các lớp (is-a relationship).
 
-```dart
-class Animal {
-  String name;
-  
-  Animal(this.name);
-  
-  void makeSound() {
-    print("Some sound");
-  }
-}
+- Dùng `implements` khi:
 
-class Dog extends Animal {
-  Dog(String name) : super(name); // Gọi constructor của lớp cha
-  
-  @override
-  void makeSound() {
-    print("Woof!");
-  }
-}
+  - Bạn muốn đảm bảo một lớp phải tuân theo một tập hợp phương thức hoặc thuộc tính nhất định.
+  - Bạn cần hỗ trợ đa kế thừa giao diện.
 
-void main() {
-  var dog = Dog("Rex");
-  print(dog.name);  // Rex
-  dog.makeSound();  // Woof!
-}
-```
 
-- Lớp `Dog` kế thừa từ lớp `Animal`, có thể truy cập thuộc tính `name` và phương thức `makeSound` của lớp `Animal`.
-- `super(name)` gọi constructor của lớp cha để khởi tạo thuộc tính `name`.
-
-### 4. Polymorphism (Đa hình)
-
-- `Polymorphism` cho phép đối tượng có thể thể hiện nhiều dạng khác nhau. Trong OOP, có thể có nhiều phương thức cùng tên nhưng hành động khác nhau tuỳ thuộc vào đối tượng gọi.
-
-- đa hình qua phương thức `override` (ghi đè).
-
-```dart
-class Animal {
-  void makeSound() {
-    print("Some sound");
-  }
-}
-
-class Dog extends Animal {
-  @override
-  void makeSound() {
-    print("Woof!");
-  }
-}
-
-class Cat extends Animal {
-  @override
-  void makeSound() {
-    print("Meow!");
-  }
-}
-
-void main() {
-  Animal dog = Dog();
-  Animal cat = Cat();
-  
-  dog.makeSound(); // Woof!
-  cat.makeSound(); // Meow!
-}
-```
-
-- Mặc dù `dog` và `cat` đều là các đối tượng của lớp `Animal`, nhưng phương thức makeSound được gọi khác nhau tùy thuộc vào đối tượng cụ thể (Dog hoặc Cat).
-
-- Đây chính là sự thể hiện của polymorphism, khi một phương thức có thể hành động khác nhau tuỳ thuộc vào loại đối tượng.
-
+| **Tính năng**          | **`extend`** (Kế thừa)                 | **`implement`** (Thực thi Interface)         | **`with`** (Mixin)                       |
+|------------------------|---------------------------------------|---------------------------------------------|-----------------------------------------|
+| **Mục đích**           | Kế thừa hành vi và trạng thái từ lớp cha. | Đảm bảo lớp thực thi tất cả phương thức trong interface. | Chia sẻ hành vi giữa các lớp mà không phải kế thừa. |
+| **Số lượng**           | Chỉ có thể kế thừa từ **một lớp cha**.  | Có thể implement **nhiều interface**.       | Có thể sử dụng **nhiều mixin**.          |
+| **Triển khai phương thức** | Phương thức của lớp cha có thể được ghi đè (override). | Lớp phải cung cấp triển khai cho tất cả các phương thức của interface. | Mixin cung cấp các phương thức mà lớp có thể sử dụng mà không cần ghi đè. |
+| **Sử dụng**            | Phù hợp khi cần tạo ra một mối quan hệ cha-con rõ ràng. | Phù hợp khi muốn tạo ra các giao diện với hành vi bắt buộc. | Phù hợp khi muốn chia sẻ hành vi mà không cần kế thừa phức tạp. |
+| **Vấn đề kế thừa đa tầng** | Không hỗ trợ kế thừa đa tầng (một lớp chỉ kế thừa từ một lớp duy nhất). | Hỗ trợ implement nhiều interface cùng lúc. | Hỗ trợ sử dụng nhiều mixin. |
