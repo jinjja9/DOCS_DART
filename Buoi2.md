@@ -66,6 +66,8 @@
       - [1. extend (Kế thừa lớp)](#1-extend-kế-thừa-lớp)
       - [2. implement (Thực thi Interface)](#2-implement-thực-thi-interface)
       - [3. Kết hợp extends và implements](#3-kết-hợp-extends-và-implements)
+  - [HOC](#hoc)
+    - [Callback](#callback)
 
 ## I. Biến và Kiểu dữ liệu
 
@@ -1769,3 +1771,78 @@ void main() {
 | **Triển khai phương thức** | Phương thức của lớp cha có thể được ghi đè (override). | Lớp phải cung cấp triển khai cho tất cả các phương thức của interface. | Mixin cung cấp các phương thức mà lớp có thể sử dụng mà không cần ghi đè. |
 | **Sử dụng**            | Phù hợp khi cần tạo ra một mối quan hệ cha-con rõ ràng. | Phù hợp khi muốn tạo ra các giao diện với hành vi bắt buộc. | Phù hợp khi muốn chia sẻ hành vi mà không cần kế thừa phức tạp. |
 | **Vấn đề kế thừa đa tầng** | Không hỗ trợ kế thừa đa tầng (một lớp chỉ kế thừa từ một lớp duy nhất). | Hỗ trợ implement nhiều interface cùng lúc. | Hỗ trợ sử dụng nhiều mixin. |
+
+## HOC
+
+### Callback
+
+```dart
+import 'dart:mirrors';
+
+void perform(void Function(String) info) {
+  info("ahihihihi");
+}
+
+void main() {
+  perform((x1) => print(x1));
+}
+```
+
+Co the nhan gia tri null
+
+```dart
+import 'dart:mirrors';
+
+void perform(void Function(String)? info) {
+  info?.call("ahihihihi");
+}
+
+void main() {
+  perform((x1) => print(x1));
+}
+```
+
+```dart
+import 'dart:io';
+
+
+main() async {
+  print("begin ");
+  countStream(10).listen((event) {
+    stdout.write(event);
+  });
+  print("end");
+}
+Stream<int> countStream(int val) async*{
+  for(int i= 0 ; i < val; ++i){
+    yield i;
+  }
+
+}
+
+// main() async {
+//   print("begin ");
+//   await for(int i in countStream(10)){
+//     stdout.write(i);
+//   }
+//   print("\nend");
+// }
+```
+
+future:
+  - await for
+  - then (callback)
+
+strem
+  - await for
+  - listen (callback)
+
+overload khong co trong dark.
+overload la trong complietime, vi update bien
+
+
+
+atctrac va interface:
+
+- attac: override lai het cac ham chi co ten
+- inter: tat ca
