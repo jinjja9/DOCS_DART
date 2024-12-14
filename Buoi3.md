@@ -1243,3 +1243,147 @@ class App extends StatelessWidget {
   }
 }
 ```
+
+## NOTE buổi học
+
+- phân biệt 3 biến val,final,dynamic
+- Sử dụng `InkWell` để tạo button là ảnh trong Flutter
+- Sử dụng `onTap` và `onDoubleTap` với `GestureDetector`
+
+![alt text](pic/image10.png)
+
+
+code 
+
+```dart
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MaterialApp(
+    home: SafeArea(
+      child: Scaffold(
+        body: App(),
+      ),
+    ),
+  ));
+}
+
+class App extends StatefulWidget {
+  @override
+  _AppState createState() => _AppState();
+}
+
+class _AppState extends State<App> {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Row(
+                children: [
+                  Flexible( //
+                    flex: 7,
+                    child: Container(
+                      height: 60,
+                      color: Colors.redAccent,
+                    ),
+                  ),
+                  Expanded( // tim hieu
+                    flex: 3,
+                    child: Container(
+                      height: 60,
+                      color: Colors.greenAccent,
+                    ),
+                  ),
+                ],
+              ),
+              Image.asset(
+                'assets/image.png',
+                height: 120,
+              ),
+              const Icon(
+                Icons.account_circle,
+                size: 50.0,
+                color: Colors.blue,
+              ),
+              SizedBox(height: 30),
+              const Text(
+                "Welcome to Learning English",
+                style: TextStyle(fontSize: 20),
+              ),
+              SizedBox(height: 30),
+              const Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "username",
+                    style: TextStyle(
+                      fontSize: 20,
+                    ),
+                    textAlign: TextAlign.left,
+                  ),
+                  SizedBox(height: 20),
+                  TextField(
+                    decoration: InputDecoration(
+                      labelText: 'Enter text',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  Text(
+                    "password",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  SizedBox(height: 20),
+                  TextField(
+                    decoration: InputDecoration(
+                      labelText: 'Enter text',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 30),
+              InkWell(
+                child: Container(
+                  height: 60,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: Colors.greenAccent,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Center(
+                    child: const Text(
+                      'Login',
+                    ),
+                  ),
+                ),
+              ),
+              RichText(
+                text: TextSpan(
+                  text: "UserName",
+                  style: TextStyle(
+                    color: Colors.black,
+                  ),
+                  children: [
+                    TextSpan(
+                      text: " *",
+                      style: TextStyle(
+                        color: Colors.red,
+                      ),
+                    )
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+```
