@@ -887,3 +887,179 @@ class DialogExample extends StatelessWidget {
 ```
 
 ### 3. Bottom Sheet
+
+Bottom Sheet là một widget xuất hiện ở phía dưới màn hình. Có hai loại Bottom Sheet chính:
+
+- `Modal Bottom Sheet`: Hiển thị dưới dạng modal (ngăn chặn thao tác với các màn hình khác cho đến khi đóng).
+- `Persistent Bottom Sheet`: Hiển thị cố định ở dưới cùng và không ngăn cản các thao tác với màn hình khác.
+
+**Persistent Bottom Sheet**
+
+```dart
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: PersistentBottomSheetExample(),
+    );
+  }
+}
+
+class PersistentBottomSheetExample extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('Persistent Bottom Sheet Example')),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            ScaffoldMessenger.of(context).showBottomSheet(
+              (context) => Container(
+                height: 200,
+                color: Colors.blue,
+                child: Center(
+                  child: Text('This is a Persistent Bottom Sheet', style: TextStyle(color: Colors.white)),
+                ),
+              ),
+            );
+          },
+          child: Text('Show Persistent Bottom Sheet'),
+        ),
+      ),
+    );
+  }
+}
+```
+
+| **Thành phần**     | **Mô tả**                                                                                     |
+|---------------------|-----------------------------------------------------------------------------------------------|
+| **Navigator**       | Dùng để điều hướng giữa các màn hình (push, pop).                                             |
+| **Dialog**          | Hộp thoại nhỏ để hiển thị thông báo hoặc yêu cầu nhập liệu (AlertDialog, Custom Dialog).       |
+| **Bottom Sheet**    | Hiển thị một bảng điều khiển dưới cùng (Modal hoặc Persistent).                               |
+
+
+## Toàn tập Flutter navigation
+
+[link](https://viblo.asia/p/toan-tap-flutter-navigation-Az45bDwVZxY#_2-truyen-data-tu-a-push-b-8)
+
+
+# ĐỌC FLUTTER
+
+[link](https://viblo.asia/p/hoc-flutter-tu-co-ban-den-nang-cao-phan-1-lam-quen-co-nang-flutter-4dbZNJOvZYM?fbclid=IwY2xjawHKVB1leHRuA2FlbQIxMAABHfHfF2JshCLSxh86QvwP1fNvz0izq6iAB1mtD-pSqEZ733O86bqdenOpPA_aem_V9nYF7fkQN_vCfWQpBuvIg)
+
+
+## Học
+
+### tìm hiểu về context (Phần 3 link trên)
+
+
+### code btvn
+
+```dart
+import 'package:ahihi/dialog_helper.dart';
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MaterialApp(
+    title: 'Name Input Dialog',
+    home: HomePage(),
+  ));
+}
+
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  final TextEditingController _displayNameController = TextEditingController();
+  var title = " ";
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('HomePage'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                title,
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                DialogHelper.showDialogA(
+                  context,
+                  (value) {
+                    setState(() {
+                      title = value.toString();
+                    });
+                  },
+                );
+              },
+              child: const Text('Open Dialog'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+```
+```dart
+import 'package:flutter/material.dart';
+
+class DialogHelper {
+  static void showDialogA(
+    BuildContext context,
+    Function(String value) onClose,
+  ) {
+    TextEditingController nameController = TextEditingController();
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Enter Your Name'),
+          content: TextField(
+            controller: nameController,
+            decoration: const InputDecoration(
+              hintText: 'Type your name here',
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: const Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop(nameController.text);
+              },
+            ),
+          ],
+        );
+      },
+    ).then((value) {
+      if (value != null && value.toString().isNotEmpty) {
+        onClose(value.toString());
+      }
+    });
+  }
+}
+```
