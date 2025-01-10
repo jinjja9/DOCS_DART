@@ -34,6 +34,14 @@ class _AddProductSheetState extends State<AddProductSheet> {
   }
 
   @override
+  void dispose() {
+    nameController.dispose();
+    priceController.dispose();
+
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(
