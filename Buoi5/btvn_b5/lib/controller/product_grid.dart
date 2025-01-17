@@ -1,7 +1,9 @@
-import 'package:btvn_b5/add_product_sheet.dart';
+import 'dart:async';
+
+import 'package:btvn_b5/view/add_product_sheet.dart';
 import 'package:flutter/material.dart';
 
-import 'Product.dart';
+import '../model/Product.dart';
 
 class ProductGrid extends StatefulWidget {
   const ProductGrid({super.key});
@@ -13,17 +15,27 @@ class ProductGrid extends StatefulWidget {
 }
 
 class _ProductGridState extends State<ProductGrid> {
-  final List<Product> products = List.generate(
-    0,
-    (index) => Product(
-      name: 'Product ${index + 1}',
-      image: 'assets/cam.png',
-      price: '100VND',
-    ),
-  );
-
+  final List<Product> products = [];
   List<Product> displayedProducts = []; // ds hien thi tim kiem
   final TextEditingController searchController = TextEditingController();
+
+  //future load anh
+  Future<void> _loadImage(Product product) async {
+    await Future.delayed(const Duration(seconds: 1));
+    setState(() {
+      product.isImageLoading = false; // da load
+    });
+  }
+
+  void addNewProduct(Product product) {
+    setState(() {
+      product.isImageLoading = true; //loading
+      products.insert(0, product);
+      displayedProducts = products;
+    });
+
+    _loadImage(product);
+  }
 
   @override
   void initState() {
@@ -31,23 +43,21 @@ class _ProductGridState extends State<ProductGrid> {
     displayedProducts = products; // hien thi toan bo list ban dau
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   void searchProducts(String query) {
     setState(() {
       if (query.isEmpty) {
-        displayedProducts = products; // hien all neu ko tim, kiem
+        displayedProducts = products;
       } else {
         displayedProducts = products
             .where((product) =>
                 product.name.toLowerCase().contains(query.toLowerCase()))
-            .toList(); // loc theo ten sp
+            .toList();
       }
-    });
-  }
-
-  void addNewProduct(Product product) {
-    setState(() {
-      products.insert(0, product);
-      displayedProducts = products;
     });
   }
 
@@ -98,12 +108,19 @@ class _ProductGridState extends State<ProductGrid> {
                       child: Column(
                         children: [
                           Expanded(
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(16),
-                              child: Image.asset(
-                                product.image,
-                                fit: BoxFit.cover,
-                              ),
+                            child: Expanded(
+                              child: (() {
+                                if (product.isImageLoading) {
+                                  return const Center(
+                                    child: CircularProgressIndicator(),
+                                  );
+                                } else {
+                                  return Image.asset(
+                                    product.image,
+                                    fit: BoxFit.cover,
+                                  );
+                                }
+                              })(),
                             ),
                           ),
                           Padding(

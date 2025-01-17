@@ -1,4 +1,4 @@
-import 'package:btvn_b5/Product.dart';
+import 'package:btvn_b5/model/Product.dart';
 import 'package:flutter/material.dart';
 
 class AddProductSheet extends StatefulWidget {
@@ -16,12 +16,12 @@ class _AddProductSheetState extends State<AddProductSheet> {
   final TextEditingController priceController = TextEditingController();
 
   final Map<String, String> itemMap = {
-    "Cam": "assets/cam.png",
-    "Dừa": "assets/dua.png",
-    "Khế": "assets/khe.png",
-    "Mít": "assets/mit.png",
-    "Nhãn": "assets/nhan.png",
-    "Quýt": "assets/quyt.png",
+    'Cam': 'assets/cam.png',
+    'Dừa': 'assets/dua.png',
+    'Khế': 'assets/khe.png',
+    'Mít': 'assets/mit.png',
+    'Nhãn': 'assets/nhan.png',
+    'Quýt': 'assets/quyt.png',
   };
   String? selectedItem;
   String? selectedImage;
