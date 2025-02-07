@@ -61,6 +61,20 @@ class _ProductGridState extends State<ProductGrid> {
     });
   }
 
+  Future<void> deleteProduct(Product product) async {
+    setState(() {
+      product.isImageLoading = true;
+    });
+
+    await Future.delayed(const Duration(seconds: 1));
+
+    setState(() {
+      products.remove(product);
+      displayedProducts = products;
+      product.isImageLoading = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -90,10 +104,10 @@ class _ProductGridState extends State<ProductGrid> {
               padding: const EdgeInsets.all(8.0),
               child: GridView.builder(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2, // so cot
-                  crossAxisSpacing: 8.0, //kc cot
-                  mainAxisSpacing: 8.0, //kc dong
-                  childAspectRatio: 1 / 1.25, // ti le rong/cao
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 8.0,
+                  mainAxisSpacing: 8.0,
+                  childAspectRatio: 1 / 1.25,
                 ),
                 itemCount: displayedProducts.length,
                 itemBuilder: (context, index) {
@@ -104,24 +118,22 @@ class _ProductGridState extends State<ProductGrid> {
                       borderRadius: BorderRadius.circular(16),
                     ),
                     child: ClipRRect(
-                      borderRadius: BorderRadius.circular(16), //bo goc
+                      borderRadius: BorderRadius.circular(16),
                       child: Column(
                         children: [
                           Expanded(
-                            child: Expanded(
-                              child: (() {
-                                if (product.isImageLoading) {
-                                  return const Center(
-                                    child: CircularProgressIndicator(),
-                                  );
-                                } else {
-                                  return Image.asset(
-                                    product.image,
-                                    fit: BoxFit.cover,
-                                  );
-                                }
-                              })(),
-                            ),
+                            child: (() {
+                              if (product.isImageLoading) {
+                                return const Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              } else {
+                                return Image.asset(
+                                  product.image,
+                                  fit: BoxFit.cover,
+                                );
+                              }
+                            })(),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(top: 8.0),
@@ -134,14 +146,21 @@ class _ProductGridState extends State<ProductGrid> {
                             ),
                           ),
                           Padding(
-                              padding: const EdgeInsets.only(top: 4.0),
-                              child: Text(
-                                product.price,
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.green,
-                                ),
-                              )),
+                            padding: const EdgeInsets.only(top: 4.0),
+                            child: Text(
+                              product.price,
+                              style: const TextStyle(
+                                fontSize: 14,
+                                color: Colors.green,
+                              ),
+                            ),
+                          ),
+                          IconButton(
+                            icon: const Icon(Icons.delete, color: Colors.red),
+                            onPressed: () {
+                              deleteProduct(product);
+                            },
+                          ),
                         ],
                       ),
                     ),
@@ -161,7 +180,7 @@ class _ProductGridState extends State<ProductGrid> {
                 borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
               ),
               builder: (context) =>
-                  AddProductSheet(onSubmit: addNewProduct)); //ctr+space
+                  AddProductSheet(onSubmit: addNewProduct)); // ctr+space
         },
         child: const Icon(Icons.add),
       ),
