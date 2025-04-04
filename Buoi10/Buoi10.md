@@ -140,85 +140,6 @@ Thông qua các động từ HTTP khác nhau, Client có thể tương tác vớ
   2. **Phân tích JSON:** Sử dụng `dart:convert` để chuyển JSON thành đối tượng Dart.
   3. **Tạo model:** Định nghĩa các lớp Dart để ánh xạ dữ liệu JSON.
 
-- Ví dụ cơ bản trong Flutter:
-
-```dart
-import 'dart:convert';
-import 'package:http/http.dart' as http;
-
-// Model class
-class User {
-  final int id;
-  final String name;
-
-  User({required this.id, required this.name});
-
-  factory User.fromJson(Map<String, dynamic> json) {
-    return User(
-      id: json['id'],
-      name: json['name'],
-    );
-  }
-}
-
-// Hàm lấy dữ liệu từ API
-Future<List<User>> fetchUsers() async {
-  final response = await http.get(Uri.parse('https://api.example.com/users'));
-  if (response.statusCode == 200) {
-    List<dynamic> jsonData = jsonDecode(response.body);
-    return jsonData.map((json) => User.fromJson(json)).toList();
-  } else {
-    throw Exception('Failed to load users');
-  }
-}
-
-// Sử dụng trong widget
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        body: FutureBuilder<List<User>>(
-          future: fetchUsers(),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return ListView.builder(
-                itemCount: snapshot.data!.length,
-                itemBuilder: (context, index) {
-                  return ListTile(
-                    title: Text(snapshot.data![index].name),
-                  );
-                },
-              );
-            } else if (snapshot.hasError) {
-              return Text('Error: ${snapshot.error}');
-            }
-            return CircularProgressIndicator();
-          },
-        ),
-      ),
-    );
-  }
-}
-```
-
-```
-dependencies:
-  http: ^1.1.0
-```
-
-- **Giải thích:**
-  
-  1. **Package `http`:** Dùng để gửi yêu cầu GET đến API.
-  2. **`jsonDecode`:** Chuyển chuỗi JSON thành `Map` hoặc `List` trong Dart.
-  3. **Model `User`:** Ánh xạ dữ liệu JSON vào đối tượng Dart.
-  4. **`FutureBuilder`:** Hiển thị dữ liệu bất đồng bộ (async) trong giao diện Flutter.
-
-
 ## IIII. HTTP, cURL, URI, URN, URL
 
 ### 1.  (HyperText Transfer Protocol - Giao thức truyền tải siêu văn bản) 
@@ -295,3 +216,91 @@ urn:<namespace>:<specific-resource-identifier>
 | URI          | Định danh hoặc định vị tài nguyên      | https://example.com, urn:isbn:12345 | Có thể có hoặc không    |
 | URL          | Định vị tài nguyên (cách truy cập)     | https://google.com, ftp://example.com/file.txt | Có                     |
 | URN          | Định danh tài nguyên (không chỉ vị trí) | urn:isbn:12345, urn:uuid:123e4567 | Không                   |
+
+
+## Lib HTTP với free API
+
+- Thực hiện một yêu cầu HTTP GET tới một API
+- Sau khi nhận được phản hồi, dữ liệu từ API sẽ được giải mã từ JSON và hiển thị trên giao diện người dùng.
+
+```
+dependencies:
+  flutter:
+    sdk: flutter
+  http: ^0.13.3
+```
+
+```dart
+import 'dart:convert';
+
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      home: MyHomePage(),
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key});
+
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  String data = "Fetching data...";
+
+  Future<void> fetchData() async {
+    final response = await http
+        .get(Uri.parse('https://jsonplaceholder.typicode.com/posts/1'));
+
+    if (response.statusCode == 200) {
+      var jsonData = jsonDecode(response.body);
+      String fullData = "userId: ${jsonData['userId']}\n";
+      fullData += "id: ${jsonData['id']}\n";
+      fullData += "title: ${jsonData['title']}\n";
+      fullData += "body: ${jsonData['body']}";
+      setState(() {
+        data = fullData;
+      });
+    } else {
+      setState(() {
+        data = 'Failed to load data';
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    fetchData();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('APT'),
+      ),
+      body: Center(
+        child: Text(
+          data,
+          style: const TextStyle(fontSize: 20),
+        ),
+      ),
+    );
+  }
+}
+```
